@@ -1,5 +1,6 @@
 #include "elf32_phdr_parser.h"
 #include "constant_value.h"
+#include "utility.cpp"
 
 void Elf32_PHDR_parser::set_phdr(ELF32_PHDR& _elf32_phdr)
 {
@@ -78,7 +79,7 @@ std::string Elf32_PHDR_parser::p_flags()
     case PF_R:
         flags = "R";
     default:
-        
+
         break;
     }
 }
