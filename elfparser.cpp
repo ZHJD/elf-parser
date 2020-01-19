@@ -192,11 +192,24 @@ void Elf32_header::print_pht()
 {
     Elf32_PHDR_parser elf32_phdr_parser;
     printf("Program header table:\n");
+    printf("%-20s%-10s%-14s%-10s%-8s%-8s%-8s%-8s\n", 
+            "type",
+            "offset",
+            "vaddr",
+            "paddr",
+            "filesz",
+            "memsz",
+            "flags",
+            "align");
     for(int i = 0; i < program_headers.size(); i++) 
     {
         elf32_phdr_parser.set_phdr(program_headers[i]);
-        printf("program header %d\n", i);
 
+        printf("%-20s0x%-8x0x%-12x0x%-14x\n",
+               elf32_phdr_parser.p_type().c_str(),
+               elf32_phdr_parser.p_offset(),
+               elf32_phdr_parser.p_vaddr(),
+               elf32_phdr_parser.p_paddr());
     }
 }
 
