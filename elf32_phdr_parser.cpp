@@ -33,6 +33,52 @@ std::string Elf32_PHDR_parser::p_type()
         ptype = "program header table";
         break;
     default:
+        ptype = "cpu related";
+        break;
+    }
+    return ptype;
+}
+
+uint32_t Elf32_PHDR_parser::p_offset()
+{
+    return elf32_phdr.p_offset;
+}
+
+uint32_t Elf32_PHDR_parser::p_vaddr()
+{
+    return elf32_phdr.p_vaddr;
+}
+
+uint32_t Elf32_PHDR_parser::p_paddr()
+{
+    return elf32_phdr.p_paddr;
+}
+
+uint32_t Elf32_PHDR_parser::p_filesz()
+{
+    return elf32_phdr.p_filesz;
+}
+
+uint32_t Elf32_PHDR_parser::p_memsz()
+{
+    return elf32_phdr.p_memsz;
+}
+
+std::string Elf32_PHDR_parser::p_flags()
+{
+    std::string flags = "";
+    switch (elf32_phdr.p_flags)
+    {
+    case PF_X:
+        flags = "X";
+        break;
+    case PF_W:
+        flags = "W";
+        break;
+    case PF_R:
+        flags = "R";
+    default:
+        
         break;
     }
 }
