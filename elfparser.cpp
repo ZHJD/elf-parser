@@ -3,8 +3,18 @@
 #include <cstdio>
 #include "elf.h"
 #include "constant_value.h"
+#include "elf32_phdr_parser.h"
 
-Elf32_header::Elf32_header(std::ifstream& elf_stream)
+
+
+
+/******************************************************************/
+Elf32_header::Elf32_header(const std::string& file_name)
+{
+    elf_stream.open(file_name, std::ifstream::binary);
+}
+
+void Elf32_header::read_elf_header()
 {
     if(!elf_stream) 
     {
@@ -162,11 +172,42 @@ void Elf32_header::print_header()
     printf("%-2s%-35s%d\n", "", "Section header string table index:", elf32_header_def.e_shstrndx);
 }
 
-int main()
+int Elf32_header::pht_entry_num()
 {
-    std::ifstream elf_stream;
-    elf_stream.open("./kernel.bin", std::ifstream::binary);
-    Elf32_header header = Elf32_header(elf_stream);
+    return elf32_header_def.e_phnum;
+}
+
+void Elf32_header::read_elf_pht()
+{
+    ELF32_PHDR elf_phdr;
+    int phnum = pht_entry_num();;
+    for(int i = 0; i < phnum; i++)
+    {
+        elf_stream.read((char *)&elf_phdr, sizeof(elf_phdr));
+        program_headers.push_back(elf_phdr);
+    }
+}
+
+void Elf32_header::print_pht()
+{
+    Elf32_PHDR_parser elf32_phdr_parser;
+    printf("Program header table:\n");
+    for(int i = 0; i < program_headers.size(); i++) 
+    {
+        elf32_phdr_parser.set_phdr(program_headers[i]);
+        printf("program header %d\n", i);
+
+    }
+}
+
+int main()
+{   
+    std::string file_name = "kernel.bin";
+    Elf32_header header = Elf32_header(file_name);
+    header.read_elf_header();
     header.print_header();
+
+    header.read_elf_pht();
+    header.print_pht();
     return 0;
 }

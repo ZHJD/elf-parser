@@ -1,4 +1,6 @@
 #include <cstdint>
+#ifndef CONSTANT_VALUE_H
+#define CONSTANT_VALUE_H
 
 // 定义文件类型etype的可能取值
 const uint16_t  ET_NONE     = 0;        // 未知目标文件格式
@@ -37,3 +39,5 @@ const uint32_t  PF_W        = 2;            // 本段具有可写权限
 const uint32_t  PF_R        = 4;            // 本段具有可读权限
 const uint32_t  PF_MASKOS   = 0x0ff00000;   // 本段与操作系统有关
 const uint32_t  PF_MASKPROC = 0xf0000000;   // 本段与处理器有关
+
+#endif

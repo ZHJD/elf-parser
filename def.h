@@ -1,3 +1,7 @@
+#include <cstdint>
+#ifndef DEF_H 
+#define DEF_H  
+
 
 // 定义elf32位结构体
 struct ELF32_HEADER_DEF 
@@ -30,3 +34,4 @@ struct ELF32_PHDR
     uint32_t    p_flags;        // 与该段相关的标志（可执行，可写，可读等）
     uint32_t    p_align;        // 指明对齐方式, 0 : 对齐，1 ： 对齐
 };
+#endif

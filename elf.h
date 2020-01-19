@@ -1,6 +1,6 @@
-#include <cstdint>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "def.h"
 
 
@@ -8,8 +8,11 @@ class Elf32_header
 {
 public:
     // 读取elf文件头
-    Elf32_header(std::ifstream& elf_stream);
+    Elf32_header(const std::string& file_name);
     
+    // 读取elf header
+    void read_elf_header();
+
     // 是否为elf文件
     bool isELF();
 
@@ -33,9 +36,22 @@ public:
 
     // 在哪种硬件平台上运行
     std::string elf_machine();
-private:
-    ELF32_HEADER_DEF elf32_header_def;
     
+    // 返回program header table中entry个数
+    int pht_entry_num();
 
+    // 读取程序头表
+    void read_elf_pht();
+
+    // 打印program header table
+    void print_pht();
+private:
+    // elf文件对象
+    std::ifstream               elf_stream;
+    // 存储elf头
+    ELF32_HEADER_DEF            elf32_header_def;
+    // 存储程序头表
+    std::vector<ELF32_PHDR>     program_headers;
 };
+
 
